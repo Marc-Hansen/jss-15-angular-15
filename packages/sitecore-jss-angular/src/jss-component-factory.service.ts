@@ -6,7 +6,6 @@ import {
   Type,
   Compiler,
   NgModuleFactory,
-  NgModuleFactoryLoader,
 } from '@angular/core';
 import { LoadChildren } from '@angular/router';
 import { ComponentRendering, HtmlElementRendering } from '@sitecore-jss/sitecore-jss/layout';
