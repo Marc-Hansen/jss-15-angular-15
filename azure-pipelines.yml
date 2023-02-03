@@ -48,7 +48,7 @@ steps:
     versionSpec: '16.x'
 - script: |
     env | sort
-    echo $(BUILD_SOURCEVERSIONMESSAGE)
+    echo $[variables['Build.SourceVersionMessage']]
   displayName: 'show variables'
 - script: |
     yarn cache clean --all && yarn install --immutable
