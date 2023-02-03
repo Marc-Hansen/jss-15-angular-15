@@ -33,7 +33,7 @@ variables:
     branchName: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
   ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
     branchName: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
-  isHotfix: $[ startsWith(variables['Build.SourceVersionMessage'], '[hotfix]') ]
+  isHotfix: $[ startsWith(variables['Build.SOURCEVERSIONMESSAGE'], '[hotfix]') ]
   lastCommitCompile: ${{ variables['Build.SourceVersionMessage'] }}
 # disable `PublishCodeCoverageResults` report generation, as `reportgenerator` provides custom report
   disable.coverage.autogenerate: 'true'
@@ -51,6 +51,8 @@ steps:
     env | sort
     echo ${{ variables['Build.SourceVersionMessage'] }}
     echo $(variables['Build.SourceVersionMessage'])
+    echo ${{ Build.SourceVersionMessage }}
+    echo $[Build.SourceVersionMessage]
   displayName: 'show variables'
 - script: |
     yarn cache clean --all && yarn install --immutable
