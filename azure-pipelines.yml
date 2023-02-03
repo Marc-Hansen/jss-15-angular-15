@@ -33,7 +33,7 @@ variables:
     branchName: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
   ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
     branchName: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
-  isHotfix: $[ startsWith(variables['Build.SOURCEVERSIONMESSAGE'], '[hotfix]') ]
+  isHotfix: $[ startsWith(variables['Build.SourceVersionMessage'], '[hotfix]') ]
   lastCommitCompile: ${{ variables['Build.SourceVersionMessage'] }}
 # disable `PublishCodeCoverageResults` report generation, as `reportgenerator` provides custom report
   disable.coverage.autogenerate: 'true'
@@ -49,8 +49,6 @@ steps:
     lastCommit: $('Build.SourceVersionMessage')
 - script: |
     env | sort
-    echo ${{ variables['Build.SourceVersionMessage'] }}
-    echo $(variables['Build.SourceVersionMessage'])
     echo $[variables['Build.SourceVersionMessage']]
   displayName: 'show variables'
 - script: |
