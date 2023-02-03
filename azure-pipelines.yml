@@ -52,7 +52,7 @@ steps:
     echo ${{ variables['Build.SourceVersionMessage'] }}
     echo $(variables['Build.SourceVersionMessage'])
     echo ${{ Build.SourceVersionMessage }}
-    echo $[Build.SourceVersionMessage]
+    echo $[variables['Build.SourceVersionMessage']]
   displayName: 'show variables'
 - script: |
     yarn cache clean --all && yarn install --immutable
