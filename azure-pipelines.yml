@@ -51,7 +51,6 @@ steps:
     env | sort
     echo ${{ variables['Build.SourceVersionMessage'] }}
     echo $(variables['Build.SourceVersionMessage'])
-    echo ${{ Build.SourceVersionMessage }}
     echo $[variables['Build.SourceVersionMessage']]
   displayName: 'show variables'
 - script: |
