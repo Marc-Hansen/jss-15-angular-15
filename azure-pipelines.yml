@@ -46,10 +46,9 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '16.x'
-    lastCommit: $('Build.SourceVersionMessage')
 - script: |
     env | sort
-    echo $[variables['Build.SourceVersionMessage']]
+    echo $(BUILD_SOURCEVERSIONMESSAGE)
   displayName: 'show variables'
 - script: |
     yarn cache clean --all && yarn install --immutable
