@@ -47,7 +47,9 @@ steps:
     versionSpec: '16.x'
 - script: |
     env | sort
-    echo $BUILD_SOURCEVERSIONMESSAGE
+    echo "Value of build source message from env is $BUILD_SOURCEVERSIONMESSAGE"
+    echo "##vso[task.setvariable variable=svsMsg;]$BUILD_SOURCEVERSIONMESSAGE"
+    echo "The var was set as $(svsMsg)"
   displayName: 'show variables'
 - script: |
     yarn cache clean --all && yarn install --immutable
