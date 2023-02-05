@@ -53,7 +53,9 @@ steps:
   displayName: 'show variables'
 - script: |
     echo "YATTA!"
-  displayName: conditonal echo
+    echo "##vso[task.setvariable variable=shouldPublish;]false"
+    echo $(shouldPublish)
+  displayName: conditonal echo, shouldPublish
   condition: startsWith(variables['Build.SourceVersionMessage'], '[hotfix]')
 - script: |
     yarn cache clean --all && yarn install --immutable
@@ -115,7 +117,7 @@ steps:
     git checkout $(branchName)
     $(npm bin)/lerna version prerelease --preid canary --force-publish --message "version %s [skip ci]" --yes
   displayName: 'pre-release version update'
-  condition: and(succeeded(), eq(variables.shouldPublish, true))
+  condition: and(succeeded(), eq(variables.shouldPublish, true), startsWith(variables['Build.SourceVersionMessage'], '[hotfix]'))
   env:
     GITHUB_PAT_ENV: $(GITHUB-PAT)
     YARN_ENABLE_IMMUTABLE_INSTALLS: false
