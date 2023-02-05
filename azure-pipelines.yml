@@ -47,12 +47,15 @@ steps:
     versionSpec: '16.x'
 - script: |
     echo "YATTA!"
-    echo "##vso[task.setvariable variable=shouldPublish;]false"
+    echo "##vso[task.setvariable variable=shouldPublish]false"
     echo $(shouldPublish)
-    echo "##vso[task.setvariable variable=thisWillChange;]value2"
+    echo "##vso[task.setvariable variable=thisWillChange]value2"
     echo $(thisWillChange)
   displayName: conditonal echo, shouldPublish
-  condition: startsWith(variables['Build.SourceVersionMessage'], '[hotfix]')
+  condition: startsWith(variables['Build.SourceVersionMessage'], '[ap-test]')
+- script: |
+    echo $(thisWillChange)
+  displayName: evaluate changed variable
 - script: |
     yarn cache clean --all && yarn install --immutable
   displayName: 'yarn install - initial'
