@@ -54,7 +54,7 @@ steps:
 - script: |
     echo "YATTA!"
   displayName: conditonal echo
-  condition: startsWith($BUILD_SOURCEVERSIONMESSAGE, '[hotfix]')
+  condition: startsWith(variables['Build.SourceVersionMessage'], '[hotfix]')
 - script: |
     yarn cache clean --all && yarn install --immutable
   displayName: 'yarn install - initial'
