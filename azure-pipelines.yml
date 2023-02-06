@@ -33,7 +33,7 @@ variables:
     branchName: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
   ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
     branchName: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
-  thisWillChange: value1
+  publishTag: --pre-dist-tag canary
 # disable `PublishCodeCoverageResults` report generation, as `reportgenerator` provides custom report
   disable.coverage.autogenerate: 'true'
 # Some steps here scaffold jss apps and check if they build and lint correctly
@@ -45,17 +45,14 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '16.x'
+# variables['Build.SourceVersionMessage'] is only accessible at step level, so we use it directly for condition here
 - script: |
-    echo "YATTA!"
-    echo "##vso[task.setvariable variable=shouldPublish]false"
-    echo $(shouldPublish)
-    echo "##vso[task.setvariable variable=thisWillChange]value2"
-    echo $(thisWillChange)
-  displayName: conditonal echo, shouldPublish
-  condition: startsWith(variables['Build.SourceVersionMessage'], '[ap-test]')
+    echo "Hotfix commit detected. New canary will not be published."
+    echo "##vso[task.setvariable variable=publishTag]--pre-dist-tag hotfix"
+  displayName: Re-evaluate publishTag for hotfix release
+  condition: startsWith(variables['Build.SourceVersionMessage'], '[hotfix]')
 - script: |
-    echo $(thisWillChange)
-  displayName: evaluate changed variable
+    echo $(publishTag)
 - script: |
     yarn cache clean --all && yarn install --immutable
   displayName: 'yarn install - initial'
@@ -116,7 +113,7 @@ steps:
     git checkout $(branchName)
     $(npm bin)/lerna version prerelease --preid canary --force-publish --message "version %s [skip ci]" --yes
   displayName: 'pre-release version update'
-  condition: and(succeeded(), eq(variables.shouldPublish, true), startsWith(variables['Build.SourceVersionMessage'], '[hotfix]'))
+  condition: and(succeeded(), eq(variables.shouldPublish, true))
   env:
     GITHUB_PAT_ENV: $(GITHUB-PAT)
     YARN_ENABLE_IMMUTABLE_INSTALLS: false
@@ -130,7 +127,7 @@ steps:
   #
 - script: |
     echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
-    $(npm bin)/lerna publish from-git --canary --pre-dist-tag canary --preid canary --no-verify-access --yes
+    $(npm bin)/lerna publish from-git --canary $(publishTag) --preid canary --no-verify-access --yes
     yarn install --no-immutable --mode=update-lockfile
     git add yarn.lock
     git commit -m "update yarn.lock [skip ci]"
