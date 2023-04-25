@@ -39,8 +39,8 @@ steps:
     inputs:
       versionSpec: '16.x'
   - script: |
-      node -v
-      npm -v
+      npm i -g npm@6
+    displayName: 'Set npm version'
   - script: |
       npm ci
     displayName: 'npm ci'
