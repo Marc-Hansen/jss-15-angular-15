@@ -1,8 +1,29 @@
 {
   "lerna": "3.4.0",
   "packages": [
-    "packages/*",
-    "samples/*"
+    "packages/sitecore-jss",
+    "packages/sitecore-jss-angular",
+    "packages/sitecore-jss-angular-schematics",
+    "packages/sitecore-jss-cli",
+    "packages/sitecore-jss-dev-tools",
+    "packages/sitecore-jss-forms",
+    "packages/sitecore-jss-manifest",
+    "packages/sitecore-jss-nextjs",
+    "packages/sitecore-jss-proxy",
+    "packages/sitecore-jss-react",
+    "packages/sitecore-jss-react-forms",
+    "packages/sitecore-jss-rendering-host",
+    "packages/sitecore-jss-tracking",
+    "packages/sitecore-jss-update-package",
+    "packages/sitecore-jss-vue",
+    "packages/sitecore-pipelines",
+    "samples/angular",
+    "samples/nextjs",
+    "samples/node-headless-ssr-proxy",
+    "samples/react",
+    "samples/sitecore-embedded-jss-app",
+    "samples/sitecore-javascript-renderings",
+    "samples/vue"
   ],
   "version": "16.0.2"
 }
