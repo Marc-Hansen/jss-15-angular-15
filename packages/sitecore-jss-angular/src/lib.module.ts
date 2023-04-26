@@ -68,10 +68,6 @@ import { LayoutService } from './layout.service';
     RichTextDirective,
     TextDirective,
   ],
-  entryComponents: [	
-    RawComponent,	
-    MissingComponentComponent,	
-  ],
 })
 export class JssModule {
   /**
